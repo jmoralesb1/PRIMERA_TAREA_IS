@@ -23,16 +23,13 @@ public class Vehiculo {
     @JoinColumn(name = "id_celda")
     private Celda celda;
 
-    // Constructor vacío (requerido por JPA)
     public Vehiculo() {
     }
 
-    // Constructor con parámetros
-    public Vehiculo(String placa, String tipo, String color, Celda celda) {
+    public Vehiculo(String placa, String tipo, String color) {
         this.placa = placa;
         this.tipo = tipo;
         this.color = color;
-        this.celda = celda;
     }
 
     // Getters y Setters
@@ -82,10 +79,9 @@ public class Vehiculo {
         return "Vehiculo{" +
                 "id=" + id +
                 ", placa='" + placa + '\'' +
-                ", tipo='" + tipo + '\'' +
+                ", tipo='" + tipo + '\'' + // Cambiado de "modelo" a "tipo"
                 ", color='" + color + '\'' +
                 ", celda=" + (celda != null ? celda.getNumero() : "null") +
                 '}';
     }
 }
-

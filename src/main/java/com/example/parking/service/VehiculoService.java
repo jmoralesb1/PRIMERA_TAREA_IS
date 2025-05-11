@@ -17,21 +17,18 @@ public class VehiculoService {
     @Autowired
     private CeldaRepository celdaRepository;
 
-    // Método para crear un vehículo y asignarle una celda disponible
     public Vehiculo crearVehiculoConCelda(Vehiculo vehiculo) {
-        Celda celdaDisponible = celdaRepository.findFirstByDisponibilidadAndDisponible("LIBRE", true);
-        if (celdaDisponible == null) {
-            System.out.println("No hay celdas disponibles.");
-            return null;
-        }
-        System.out.println("Celda disponible encontrada: " + celdaDisponible.getNumero());
-        celdaDisponible.setDisponibilidad("OCUPADA");
-        celdaDisponible.setDisponible(false);
-        celdaRepository.save(celdaDisponible);
+    Celda celdaDisponible = celdaRepository.findFirstByDisponibilidadAndDisponible("LIBRE", true)
+            .orElseThrow(() -> new RuntimeException("No hay celdas disponibles."));
 
-        vehiculo.setCelda(celdaDisponible);
-        return vehiculoRepository.save(vehiculo);
-    }
+    System.out.println("Celda disponible encontrada: " + celdaDisponible.getNumero());
+    celdaDisponible.setDisponibilidad("OCUPADA");
+    celdaDisponible.setDisponible(false);
+    celdaRepository.save(celdaDisponible);
+
+    vehiculo.setCelda(celdaDisponible);
+    return vehiculoRepository.save(vehiculo);
+}
 
     public List<Vehiculo> obtenerTodos() {
         return vehiculoRepository.findAll();
