@@ -16,9 +16,10 @@ public class CeldaServiceImpl implements CeldaService {
 
     @Override
     public Celda asignarCeldaDisponible() {
-        // Usa el método correcto definido en CeldaRepository
-        return celdaRepository.findFirstByDisponibilidadAndDisponible("LIBRE", true);
-    }
+    // Encuentra la primera celda disponible
+    return celdaRepository.findFirstByDisponibilidadAndDisponible("LIBRE", true)
+            .orElseThrow(() -> new RuntimeException("No hay celdas disponibles para asignar."));
+}
 
     @Override
     public Celda actualizarCelda(Celda celda) {

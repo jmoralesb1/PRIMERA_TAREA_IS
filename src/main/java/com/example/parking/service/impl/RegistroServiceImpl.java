@@ -27,25 +27,56 @@ public class RegistroServiceImpl implements RegistroService {
     }
 
     @Override
-    public Registro registrarSalida(Long idVehiculo) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public void registrarEntrada(String placa, String modelo, String color) {
+        // Buscar o crear vehículo
+        Vehiculo vehiculo = vehiculoRepository.findByPlaca(placa)
+                .orElseGet(() -> vehiculoRepository.save(new Vehiculo(placa, modelo, color)));
+
+        // Asignar celda disponible
+        Celda celda = celdaRepository.findFirstByDisponibilidadAndDisponible("LIBRE", true)
+                .orElseThrow(() -> new RuntimeException("No hay celdas disponibles para asignar."));
+
+        // Crear registro
+        Registro registro = new Registro();
+        registro.setVehiculo(vehiculo);
+        registro.setCelda(celda);
+        registro.setFechaHoraEntrada(LocalDateTime.now());
+
+        // Marcar celda como ocupada
+        celda.setDisponible(false);
+        celda.setDisponibilidad("OCUPADA");
+        celdaRepository.save(celda);
+
+        // Guardar registro
+        registroRepository.save(registro);
     }
 
     @Override
     public Registro registrarSalidaPorPlaca(String placa) {
+        // Buscar vehículo por placa
         Vehiculo vehiculo = vehiculoRepository.findByPlaca(placa)
                 .orElseThrow(() -> new RuntimeException("Vehículo no encontrado con la placa: " + placa));
 
+        // Buscar registro activo (sin hora de salida)
         Registro registro = registroRepository.findByVehiculoAndHoraSalidaIsNull(vehiculo)
                 .orElseThrow(() -> new RuntimeException("No hay registro de entrada activo para este vehículo."));
 
+        // Registrar hora de salida
         registro.setFechaHoraSalida(LocalDateTime.now());
 
+        // Liberar la celda
         Celda celda = registro.getCelda();
-        celda.setDisponibilidad("LIBRE");
         celda.setDisponible(true);
+        celda.setDisponibilidad("LIBRE");
         celdaRepository.save(celda);
 
+        // Guardar el registro actualizado
         return registroRepository.save(registro);
+    }
+
+    @Override
+    public Object obtenerEstadoCeldas() {
+        // Consultar todas las celdas y devolver su estado
+        return celdaRepository.findAll();
     }
 }

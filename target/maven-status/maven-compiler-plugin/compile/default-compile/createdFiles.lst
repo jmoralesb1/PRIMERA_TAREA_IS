@@ -1,0 +1,14 @@
+com\example\parking\model\repository\CeldaRepository.class
+com\example\parking\model\entity\Registro.class
+com\example\parking\model\entity\Vehiculo.class
+com\example\parking\IuParkingSimplificadoApplication.class
+com\example\parking\model\repository\RegistroRepository.class
+com\example\parking\service\RegistroService.class
+com\example\parking\model\repository\VehiculoRepository.class
+com\example\parking\service\impl\CeldaServiceImpl.class
+com\example\parking\model\entity\Celda.class
+com\example\parking\service\CeldaService.class
+com\example\parking\service\impl\RegistroServiceImpl.class
+com\example\parking\controller\VehiculoController.class
+com\example\parking\service\VehiculoService.class
+com\example\parking\controller\RegistroController.class

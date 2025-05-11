@@ -1,0 +1,14 @@
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\service\impl\RegistroServiceImpl.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\model\entity\Registro.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\model\entity\Celda.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\model\repository\RegistroRepository.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\model\repository\VehiculoRepository.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\model\entity\Vehiculo.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\service\CeldaService.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\model\repository\CeldaRepository.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\controller\RegistroController.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\controller\VehiculoController.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\IuParkingSimplificadoApplication.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\service\impl\CeldaServiceImpl.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\service\RegistroService.java
+C:\Users\jaide\OneDrive\Escritorio\OJO\IU-Parking-Simplificado\src\main\java\com\example\parking\service\VehiculoService.java
