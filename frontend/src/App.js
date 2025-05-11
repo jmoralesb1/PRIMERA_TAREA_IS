@@ -11,12 +11,12 @@ function App() {
         <nav className="mb-4">
           <Link to="/entrada" className="mr-4">Registrar Entrada</Link>
           <Link to="/salida" className="mr-4">Registrar Salida</Link>
-          <Link to="/celdas">Estado de Celdas</Link> {/* Nueva ruta */}
+          <Link to="/celdas">Estado de Celdas</Link>
         </nav>
         <Routes>
           <Route path="/entrada" element={<Entrada />} />
           <Route path="/salida" element={<Salida />} />
-          <Route path="/celdas" element={<EstadoCeldas />} /> {/* Nueva vista */}
+          <Route path="/celdas" element={<EstadoCeldas />} />
         </Routes>
       </div>
     </Router>
@@ -24,4 +24,3 @@ function App() {
 }
 
 export default App;
-

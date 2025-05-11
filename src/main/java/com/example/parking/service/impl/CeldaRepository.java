@@ -1,4 +1,4 @@
-package com.example.parking.model.repository;
+package com.example.parking.service.impl;
 
 import com.example.parking.model.entity.Celda;
 import org.springframework.data.jpa.repository.JpaRepository;

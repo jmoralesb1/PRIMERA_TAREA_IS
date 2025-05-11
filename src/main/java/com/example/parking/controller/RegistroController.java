@@ -54,6 +54,20 @@ public class RegistroController {
         }
     }
 
+    @PostMapping("/salida/{placa}")
+    public ResponseEntity<String> registrarSalidaPorPlaca(@PathVariable String placa) {
+        if (placa == null || placa.isEmpty()) {
+            return ResponseEntity.badRequest().body("La placa no puede estar vacía.");
+        }
+
+        try {
+            registroService.registrarSalidaPorPlaca(placa);
+            return ResponseEntity.ok("Salida registrada correctamente.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("Error registrando la salida: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/vehiculos-activos")
     public ResponseEntity<?> obtenerVehiculosActivos() {
         try {

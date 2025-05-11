@@ -5,6 +5,6 @@ const API = axios.create({
 });
 
 export const registrarEntrada = (vehiculo) => API.post('/vehiculo/create', vehiculo);
-export const obtenerUsuarios = () => API.get('/usuario/all');
-export const obtenerRegistrosActivos = () => API.get('/registro/activos');
-export const registrarSalida = (idRegistro) => API.post(`/registro/salida/${idRegistro}`);
+export const obtenerRegistrosActivos = () => API.get('/vehiculos/all');
+// Registrar la salida de un vehículo
+export const registrarSalida = (data) => API.post('/registro/salida', data);

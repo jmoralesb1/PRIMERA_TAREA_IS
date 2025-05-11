@@ -1,45 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { obtenerRegistrosActivos, registrarSalida } from '../services/api';
 
 const Salida = () => {
-  const [registros, setRegistros] = useState([]);
-  const [idRegistro, setIdRegistro] = useState('');
+  const [vehiculos, setVehiculos] = useState([]);
+  const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState('');
+  const [placaManual, setPlacaManual] = useState('');
+  const [error, setError] = useState(null);
+  const [mensaje, setMensaje] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/registro/activos')
-      .then(res => setRegistros(res.data))
-      .catch(err => console.error('Error obteniendo registros activos:', err));
+    const cargarVehiculos = async () => {
+      try {
+        const response = await obtenerRegistrosActivos();
+        setVehiculos(response.data);
+        setError(null); // Limpiar errores previos
+      } catch (error) {
+        console.error('Error al cargar los vehículos activos:', error);
+        setError('No se pudieron cargar los vehículos activos. Intenta nuevamente más tarde.');
+      }
+    };
+
+    cargarVehiculos();
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const manejarSalida = async () => {
+    if (!vehiculoSeleccionado && !placaManual.trim()) {
+      alert('Por favor, selecciona un vehículo o ingresa una placa válida.');
+      return;
+    }
+
     try {
-      await axios.post(`http://localhost:8080/api/registro/salida/${idRegistro}`);
-      alert('Salida registrada correctamente');
-      setIdRegistro('');
-      // recargar lista de registros activos
-      const res = await axios.get('http://localhost:8080/api/registro/activos');
-      setRegistros(res.data);
-    } catch (err) {
-      console.error('Error al registrar salida:', err);
-      alert('Error al registrar salida del vehículo.');
+      const registro = vehiculoSeleccionado || placaManual.trim(); // Prioriza la selección, pero permite usar la placa manual
+      await registrarSalida({ placa: registro });
+      alert('Salida registrada correctamente.');
+      setMensaje('Salida registrada correctamente.');
+      setError(null);
+
+      if (vehiculoSeleccionado) {
+        // Si el vehículo fue seleccionado, elimínalo de la lista
+        setVehiculos((prev) =>
+          prev.filter((vehiculo) => vehiculo.id !== vehiculoSeleccionado)
+        );
+        setVehiculoSeleccionado('');
+      }
+      setPlacaManual(''); // Limpiar el campo de texto
+    } catch (error) {
+      console.error('Error al registrar la salida:', error);
+      setError('Error al registrar la salida. Intenta nuevamente.');
+      setMensaje(null);
     }
   };
 
   return (
     <div>
       <h2>Registrar Salida</h2>
-      <form onSubmit={handleSubmit}>
-        <select value={idRegistro} onChange={(e) => setIdRegistro(e.target.value)} required>
+      {error && <p className="text-red-500">{error}</p>}
+      {mensaje && <p className="text-green-500">{mensaje}</p>}
+
+      <div>
+        <label htmlFor="placaManual">Ingresar Placa Manualmente:</label>
+        <input
+          id="placaManual"
+          type="text"
+          value={placaManual}
+          onChange={(e) => setPlacaManual(e.target.value)}
+          placeholder="Ingresa la placa del vehículo"
+          className="border p-2 mb-4"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="vehiculoSeleccionado">Seleccionar un Vehículo:</label>
+        <select
+          id="vehiculoSeleccionado"
+          value={vehiculoSeleccionado}
+          onChange={(e) => setVehiculoSeleccionado(e.target.value)}
+        >
           <option value="">Seleccione un vehículo</option>
-          {registros.map((reg) => (
-            <option key={reg.idR} value={reg.idR}>
-              {reg.vehiculo.placa} - Entrada: {new Date(reg.fechaEntrada).toLocaleString()}
+          {vehiculos.map((vehiculo) => (
+            <option key={vehiculo.id} value={vehiculo.placa}>
+              {vehiculo.placa} - {vehiculo.tipo} - {vehiculo.color}
             </option>
           ))}
         </select>
-        <button type="submit">Registrar Salida</button>
-      </form>
+      </div>
+
+      <button onClick={manejarSalida} className="p-2 bg-blue-500 text-white">
+        Registrar Salida
+      </button>
     </div>
   );
 };

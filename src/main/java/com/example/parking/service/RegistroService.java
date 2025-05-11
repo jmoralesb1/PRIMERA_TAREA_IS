@@ -1,6 +1,7 @@
 package com.example.parking.service;
 
 import com.example.parking.model.entity.Registro;
+import com.example.parking.model.entity.Vehiculo;
 
 public interface RegistroService {
 
@@ -12,4 +13,7 @@ public interface RegistroService {
 
     // Método para obtener el estado de las celdas
     Object obtenerEstadoCeldas();
+    // Método para obtener los vehículos activos
+    List<Vehiculo> obtenerVehiculosActivos();
+
 }

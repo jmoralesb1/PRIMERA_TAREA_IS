@@ -12,3 +12,7 @@ public interface RegistroRepository extends JpaRepository<Registro, Long> {
 
     List<Registro> findByFechaHoraSalidaIsNull();
 }
+
+public interface VehiculoRepository extends JpaRepository<Vehiculo, Long> {
+    Optional<Vehiculo> findByPlaca(String placa);
+}
